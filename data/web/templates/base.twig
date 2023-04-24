@@ -23,8 +23,8 @@
     }
   </script>
 
-  <link rel="shortcut icon" href="/favicon.png" type="image/png">
-  <link rel="icon" href="/favicon.png" type="image/png">
+  <link rel="shortcut icon" href="{{ favicon|default('/favicon.png') }}" type="image/png">
+  <link rel="icon" href="{{ favicon|default('/favicon.png') }}" type="image/png">
 </head>
 <body>
 <div class="overlay"></div>

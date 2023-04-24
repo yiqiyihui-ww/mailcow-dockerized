@@ -169,7 +169,7 @@ services:
             - phpfpm
 
     sogo-mailcow:
-      image: mailcow/sogo:1.117
+      image: mailcow/sogo:1.118
       environment:
         - DBNAME=${DBNAME}
         - DBUSER=${DBUSER}
@@ -510,7 +510,7 @@ services:
             - watchdog
 
     dockerapi-mailcow:
-      image: mailcow/dockerapi:2.03
+      image: mailcow/dockerapi:2.04
       security_opt:
         - label=disable
       restart: always

@@ -7,31 +7,89 @@
       <span class="d-none d-md-block">{{ lang.admin.customize }}</span>
     </div>
     <div id="collapse-tab-config-customize" class="card-body collapse" data-bs-parent="#admin-content">
-      <legend><i class="bi bi-file-image"></i> {{ lang.admin.change_logo }}</legend><hr />
-      <p class="text-muted">{{ lang.admin.logo_info }}</p>
-      <form class="form-inline" role="form" method="post" enctype="multipart/form-data">
-        <p>
-          <input class="mb-4" type="file" name="main_logo" accept="image/gif, image/jpeg, image/pjpeg, image/x-png, image/png, image/svg+xml"><br>
-          <button name="submit_main_logo" type="submit" class="btn btn-sm d-block d-sm-inline btn-secondary"><i class="bi bi-upload"></i> {{ lang.admin.upload }}</button>
-        </p>
-      </form>
-      {% if logo %}
-        <div class="row">
-          <div class="col-sm-4">
-            <div class="thumbnail">
+      <div class="row">
+        <div class="col-12 col-lg-6 d-flex flex-column">
+          <legend><i class="bi bi-file-image"></i> {{ lang.admin.change_logo }}</legend><hr />
+          <p class="text-muted">{{ lang.admin.logo_info }}</p>
+          <form class="form-inline" role="form" method="post" enctype="multipart/form-data">
+            <p>
+              <input class="mb-4" type="file" name="main_logo" accept="image/gif, image/jpeg, image/pjpeg, image/x-png, image/png, image/svg+xml"><br>
+              <button name="submit_main_logo" type="submit" class="btn btn-sm d-block d-sm-inline btn-secondary"><i class="bi bi-upload"></i> {{ lang.admin.upload }}</button>
+            </p>
+          </form>
+          {% if logo %}
+            <div class="thumbnail mt-auto">
               <img class="img-thumbnail" src="{{ logo }}" alt="mailcow logo">
-              <div class="caption">
+              <div class="caption d-flex flex-wrap mt-2 mb-4">
                 <span class="badge fs-5 bg-info">{{ logo_specs.geometry.width }}x{{ logo_specs.geometry.height }} px</span>
-                <span class="badge fs-5 bg-info">{{ logo_specs.mimetype }}</span>
+                <span class="badge fs-5 bg-info mx-2">{{ logo_specs.mimetype }}</span>
                 <span class="badge fs-5 bg-info">{{ logo_specs.fileSize }}</span>
               </div>
             </div>
-            <hr>
             <form class="form-inline" role="form" method="post">
               <p><button name="reset_main_logo" type="submit" class="btn btn-sm d-block d-sm-inline btn-secondary">{{ lang.admin.reset_default }}</button></p>
             </form>
+          {% endif %}
+        </div>
+        <div class="col-12 col-lg-6 d-flex flex-column">
+          <legend><i class="bi bi-file-image"></i> {{ lang.admin.change_favicon }}</legend><hr />
+          <p class="text-muted">{{ lang.admin.favicon_info|raw }}</p>
+          <form class="form-inline" role="form" method="post" enctype="multipart/form-data">
+            <p>
+              <input class="mb-4" type="file" name="favicon" accept="image/x-icon, image/png"><br>
+              <button name="submit_favicon" type="submit" class="btn btn-sm d-block d-sm-inline btn-secondary"><i class="bi bi-upload"></i> {{ lang.admin.upload }}</button>
+            </p>
+          </form>
+          {% if favicon %}
+          <div class="thumbnail mt-auto">
+            <img class="img-thumbnail" src="{{ favicon }}" alt="mailcow favicon">
+            <div class="caption d-flex flex-wrap mt-2 mb-4">
+              <span class="badge fs-5 bg-info">{{ favicon_specs.geometry.width }}x{{ favicon_specs.geometry.height }} px</span>
+              <span class="badge fs-5 bg-info mx-2">{{ favicon_specs.mimetype }}</span>
+              <span class="badge fs-5 bg-info">{{ favicon_specs.fileSize }}</span>
+            </div>
+          </div>
+          <form class="form-inline" role="form" method="post">
+            <p><button name="reset_favicon" type="submit" class="btn btn-sm d-block d-sm-inline btn-secondary">{{ lang.admin.reset_default }}</button></p>
+          </form>
+          {% endif %}
+        </div>
+      </div>
+      {% if not skip_sogo %}
+      <legend style="padding-top:20px" unselectable="on">{{ lang.admin.sogo_theme }}</legend><hr />
+      <form class="form" data-id="sogo_theme" role="form" method="post">
+        <div class="mb-4 row">
+          <div class="col-12 col-md-4 mb-2">
+            <label class="d-block" for="sogo_primary">{{ lang.admin.sogo_theme_primary }}</label>
+            <select multiple data-width="100%" id="sogo_primary" name="primary" class="selectpicker show-tick" data-max-options="1" data-id="sogo_theme">
+            {% for sogo_palette in sogo_palettes %}
+              <option {% if sogo_palette == sogo_theme.primary %}selected{% endif %} value="{{ sogo_palette }}">{{ sogo_palette }}</option>
+            {% endfor %}
+            </select>
+          </div>
+          <div class="col-12 col-md-4 mb-2">
+            <label class="d-block" for="sogo_accent">{{ lang.admin.sogo_theme_accent }}</label>
+            <select multiple data-width="100%" id="sogo_accent" name="accent" class="selectpicker show-tick" data-max-options="1" data-id="sogo_theme">
+            {% for sogo_palette in sogo_palettes %}
+              <option {% if sogo_palette == sogo_theme.accent %}selected{% endif %} value="{{ sogo_palette }}">{{ sogo_palette }}</option>
+            {% endfor %}
+            </select>
+          </div>
+          <div class="col-12 col-md-4 mb-2">
+            <label class="d-block" for="sogo_background">{{ lang.admin.sogo_theme_background }}</label>
+            <select multiple data-width="100%" id="sogo_background" name="background" class="selectpicker show-tick" data-max-options="1" data-id="sogo_theme">
+            {% for sogo_palette in sogo_palettes %}
+              <option {% if sogo_palette == sogo_theme.background %}selected{% endif %} value="{{ sogo_palette }}">{{ sogo_palette }}</option>
+            {% endfor %}
+            </select>
           </div>
         </div>
+        <p class="text-muted">{{ lang.admin.sogo_theme_info }}</p>
+        <p><div class="btn-group">
+          <button class="btn btn-sm btn-xs-half d-block d-sm-inline btn-success" type="button" data-action="edit_selected" data-item="sogo-theme" data-id="sogo_theme" data-reload="no" data-api-url='edit/sogo_theme' data-api-attr='{}'><i class="bi bi-check-lg"></i> {{ lang.admin.save }}</button>
+          <button class="btn btn-sm btn-xs-half d-block d-sm-inline btn-danger" type="button" data-action="delete_selected" data-item="sogo-theme" data-id="sogo_theme" data-api-url="delete/sogo_theme"><i class="bi bi-trash"></i> {{ lang.admin.remove }}</button>
+        </div></p>
+      </form>
       {% endif %}
       <legend style="padding-top:20px" unselectable="on">{{ lang.admin.ip_check }}</legend><hr />
       <div id="ip_check">

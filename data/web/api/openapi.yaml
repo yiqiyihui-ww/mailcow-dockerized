@@ -5602,6 +5602,109 @@ paths:
       description: You can list all mailboxes existing in system for a specific domain.
       operationId: Get mailboxes of a domain
       summary: Get mailboxes of a domain
+  /api/v1/edit/sogo_theme/:
+    post:
+      responses:
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "200":
+          content:
+            application/json:
+              examples:
+                response:
+                  value:
+                    - type: success
+                      log:
+                        - customize
+                        - edit
+                        - sogo_theme
+                        - primary: "brown"
+                          accent: "brown"
+                          background: "amber"
+                      msg:
+                        - sogo_theme_modified
+              schema:
+                properties:
+                  log:
+                    description: contains request object
+                    items: {}
+                    type: array
+                  msg:
+                    items: {}
+                    type: array
+                  type:
+                    enum:
+                      - success
+                      - danger
+                      - error
+                    type: string
+                type: object
+          description: OK
+          headers: {}
+      tags:
+        - Customize
+      description: >-
+        Using this endpoint you can edit the sogo theme. SOGo has to be restarted after each change.
+      operationId: Edit SOGo theme
+      requestBody:
+        content:
+          application/json:
+            schema:
+              example:
+                primary: "brown"
+                accent: "brown"
+                background: "amber"
+      summary: Edit SOGo theme
+  /api/v1/delete/sogo_theme/:
+    post:
+      responses:
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "200":
+          content:
+            application/json:
+              examples:
+                response:
+                  value:
+                    - type: success
+                      log:
+                        - customize
+                        - delete
+                        - sogo_theme
+                        - items:
+                            - sogo-theme
+                      msg: "sogo_theme_removed"
+              schema:
+                properties:
+                  log:
+                    description: contains request object
+                    items: {}
+                    type: array
+                  msg:
+                    items: {}
+                    type: array
+                  type:
+                    enum:
+                      - success
+                      - danger
+                      - error
+                    type: string
+                type: object
+          description: OK
+          headers: {}
+      tags:
+        - Customize
+      description: >-
+        Using this endpoint you can reset the sogo theme. SOGo has to be restarted after each change.
+      operationId: Reset SOGo theme
+      requestBody:
+        content:
+          application/json:
+            schema:
+              example:
+                - items:
+                  - "sogo-theme"
+      summary: Reset SOGo theme
 
 tags:
   - name: Domains
@@ -5646,3 +5749,5 @@ tags:
     description: Get the status of your cow
   - name: Ratelimits
     description: Edit domain ratelimits
+  - name: Customize
+    description: You can customize mailcow's appearance

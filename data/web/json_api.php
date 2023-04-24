@@ -1744,6 +1744,9 @@ if (isset($_GET['query'])) {
         case "rlhash":
           echo ratelimit('delete', null, implode($items));
         break;
+        case "sogo_theme":
+          process_delete_return(customize('delete', 'sogo_theme', $items));
+        break;
         // return no route found if no case is matched
         default:
           http_response_code(404);
@@ -1937,6 +1940,9 @@ if (isset($_GET['query'])) {
         break;
         case "ip_check":
           process_edit_return(customize('edit', 'ip_check', $attr));
+        break;
+        case "sogo_theme":
+          process_edit_return(customize('edit', 'sogo_theme', $attr));
         break;
         case "self":
           if ($_SESSION['mailcow_cc_role'] == "domainadmin") {

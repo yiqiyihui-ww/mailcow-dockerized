@@ -240,6 +240,8 @@ chmod 600 /var/lib/sogo/GNUstep/Defaults/sogod.plist
 
 # Copy logo, if any
 [[ -f /etc/sogo/sogo-full.svg ]] && cp /etc/sogo/sogo-full.svg /usr/lib/GNUstep/SOGo/WebServerResources/img/sogo-full.svg
+# Use the mailcow logo if no sogo-full.svg file does exist
+! [[ -f /usr/lib/GNUstep/SOGo/WebServerResources/img/sogo-full.svg ]] && cp /etc/sogo/cow_mailcow.svg /usr/lib/GNUstep/SOGo/WebServerResources/img/sogo-full.svg
 
 # Rsync web content
 echo "Syncing web content with named volume"

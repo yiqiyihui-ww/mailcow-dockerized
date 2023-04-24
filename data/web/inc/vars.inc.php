@@ -210,6 +210,30 @@ $FIDO2_USER_PRESENT_FLAG = true;
 
 $FIDO2_FORMATS = array('apple', 'android-key', 'android-safetynet', 'fido-u2f', 'none', 'packed', 'tpm');
 
+$SOGO_PALETTES = array(
+  'sogo-green',
+  'sogo-blue',
+  'sogo-grey',
+  'red', 
+  'pink', 
+  'purple', 
+  'deep-purple', 
+  'indigo', 
+  'blue', 
+  'light-blue', 
+  'cyan', 
+  'teal', 
+  'green', 
+  'light-green', 
+  'lime', 
+  'yellow', 
+  'amber', 
+  'orange', 
+  'deep-orange', 
+  'brown', 
+  'grey', 
+  'blue-grey'
+);
 
 // Set visible Rspamd maps in mailcow UI, do not change unless you know what you are doing
 $RSPAMD_MAPS = array(

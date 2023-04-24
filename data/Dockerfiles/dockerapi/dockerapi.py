@@ -273,7 +273,50 @@ class DockerUtils:
             # todo: check each exit code
           res = { 'type': 'success', 'msg': 'Scheduled immediate delivery'}
           return Response(content=json.dumps(res, indent=4), media_type="application/json")
-          
+
+  # api call: container_post - post_action: exec - cmd: sogo - task: customize_enable
+  def container_post__exec__sogo__customize_enable(self, container_id, request_json):
+    for container in self.docker_client.containers.list(filters={"id": container_id}):
+      cmd = ["/bin/bash", "-c", "/customize.sh enable"]  
+      sogo_return = container.exec_run(cmd)
+      return exec_run_handler('utf8_text_only', sogo_return)
+  # api call: container_post - post_action: exec - cmd: sogo - task: customize_disable
+  def container_post__exec__sogo__customize_disable(self, container_id, request_json):
+    for container in self.docker_client.containers.list(filters={"id": container_id}):
+      cmd = ["/bin/bash", "-c", "/customize.sh disable"]  
+      sogo_return = container.exec_run(cmd)
+      return exec_run_handler('utf8_text_only', sogo_return)
+  # api call: container_post - post_action: exec - cmd: sogo - task: set_logo
+  def container_post__exec__sogo__set_logo(self, container_id, request_json):
+    for container in self.docker_client.containers.list(filters={"id": container_id}):
+      cmd = ["/bin/bash", "-c", "/customize.sh set_logo"]  
+      sogo_return = container.exec_run(cmd)
+      return exec_run_handler('utf8_text_only', sogo_return)
+  # api call: container_post - post_action: exec - cmd: sogo - task: remove_logo
+  def container_post__exec__sogo__remove_logo(self, container_id, request_json):
+    for container in self.docker_client.containers.list(filters={"id": container_id}):
+      cmd = ["/bin/bash", "-c", "rm -f /usr/lib/GNUstep/SOGo/WebServerResources/img/sogo-full.svg"]  
+      sogo_return = container.exec_run(cmd)
+      return exec_run_handler('utf8_text_only', sogo_return) 
+  # api call: container_post - post_action: exec - cmd: sogo - task: set_favicon
+  def container_post__exec__sogo__set_favicon(self, container_id, request_json):
+    for container in self.docker_client.containers.list(filters={"id": container_id}):
+      cmd = ["/bin/bash", "-c", "/customize.sh set_favicon"]  
+      sogo_return = container.exec_run(cmd)
+      return exec_run_handler('utf8_text_only', sogo_return)
+  # api call: container_post - post_action: exec - cmd: sogo - task: remove_favicon
+  def container_post__exec__sogo__remove_favicon(self, container_id, request_json):
+    for container in self.docker_client.containers.list(filters={"id": container_id}):
+      cmd = ["/bin/bash", "-c", "cp /sogo.ico /usr/lib/GNUstep/SOGo/WebServerResources/img/sogo.ico"]  
+      sogo_return = container.exec_run(cmd)
+      return exec_run_handler('utf8_text_only', sogo_return)  
+  # api call: container_post - post_action: exec - cmd: sogo - task: set_theme
+  def container_post__exec__sogo__set_theme(self, container_id, request_json):
+    for container in self.docker_client.containers.list(filters={"id": container_id}):
+      cmd = ["/bin/bash", "-c", "/customize.sh set_theme"]  
+      sogo_return = container.exec_run(cmd)
+      return exec_run_handler('utf8_text_only', sogo_return)
+
   # api call: container_post - post_action: exec - cmd: mailq - task: list
   def container_post__exec__mailq__list(self, container_id, request_json):
     for container in self.docker_client.containers.list(filters={"id": container_id}):

@@ -125,6 +125,14 @@ if (isset($_SESSION['mailcow_cc_role']) && $_SESSION['mailcow_cc_role'] == "admi
 	if (isset($_POST["reset_main_logo"])) {
     customize('delete', 'main_logo');
 	}
+	if (isset($_POST["submit_favicon"])) {
+    if ($_FILES['favicon']['error'] == 0) {
+      customize('add', 'favicon', $_FILES);
+    }
+	}
+	if (isset($_POST["reset_favicon"])) {
+    customize('delete', 'favicon');
+	}
   // Some actions will not be available via API
 	if (isset($_POST["license_validate_now"])) {
 		license('verify');

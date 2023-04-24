@@ -25,6 +25,7 @@ RUN echo "Building from repository $SOGO_DEBIAN_REPOSITORY" \
   psmisc \
   wget \
   patch \
+  redis-tools \
   && dpkgArch="$(dpkg --print-architecture | awk -F- '{ print $NF }')" \
   && wget -O /usr/local/bin/gosu "https://github.com/tianon/gosu/releases/download/$GOSU_VERSION/gosu-$dpkgArch" \
   && chmod +x /usr/local/bin/gosu \
@@ -46,10 +47,14 @@ COPY syslog-ng-redis_slave.conf /etc/syslog-ng/syslog-ng-redis_slave.conf
 COPY supervisord.conf /etc/supervisor/supervisord.conf
 COPY acl.diff /acl.diff
 COPY stop-supervisor.sh /usr/local/sbin/stop-supervisor.sh
+COPY customize.sh /
 COPY docker-entrypoint.sh /
 
+RUN rm -rf /usr/lib/GNUstep/SOGo/WebServerResources/img/sogo-full.svg
+RUN mv /usr/lib/GNUstep/SOGo/WebServerResources/img/sogo.ico /sogo.ico
 RUN chmod +x /bootstrap-sogo.sh \
-  /usr/local/sbin/stop-supervisor.sh
+  /usr/local/sbin/stop-supervisor.sh \
+  /customize.sh
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
 

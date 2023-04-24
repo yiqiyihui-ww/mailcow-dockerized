@@ -103,9 +103,12 @@ $template_data = [
   'rsettings' => $rsettings,
   'rspamd_regex_maps' => $rspamd_regex_maps,
   'logo_specs' => customize('get', 'main_logo_specs'),
+  'favicon_specs' => customize('get', 'favicon_specs'),
   'ip_check' => customize('get', 'ip_check'),
   'password_complexity' => password_complexity('get'),
   'show_rspamd_global_filters' => @$_SESSION['show_rspamd_global_filters'],
+  'sogo_palettes' => $GLOBALS['SOGO_PALETTES'],
+  'sogo_theme' => customize('get', 'sogo_theme'),
   'lang_admin' => json_encode($lang['admin']),
   'lang_datatables' => json_encode($lang['datatables'])
 ];
