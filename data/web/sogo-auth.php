@@ -39,10 +39,19 @@ if (isset($_SERVER['PHP_AUTH_USER'])) {
 elseif (isset($_GET['login'])) {
   // load prerequisites only when required
   require_once $_SERVER['DOCUMENT_ROOT'] . '/inc/prerequisites.inc.php';
+
+  $login = html_entity_decode(rawurldecode($_GET["login"]));
+  if (!empty($_GET['sso_token'])) {
+    $login = mailbox_sso('check', $_GET['sso_token']);
+    if ($login !== false) {
+      $_SESSION['mailcow_cc_username'] = $login;
+      $_SESSION['mailcow_cc_role'] = 'user';
+    }
+  }
+
   // check if dual_login is active
   $is_dual = (!empty($_SESSION["dual-login"]["username"])) ? true : false;
   // check permissions (if dual_login is active, deny sso when acl is not given)
-  $login = html_entity_decode(rawurldecode($_GET["login"]));
   if (isset($_SESSION['mailcow_cc_role']) &&
     (($_SESSION['acl']['login_as'] == "1" && $ALLOW_ADMIN_EMAIL_LOGIN !== 0) || ($is_dual === false && $login == $_SESSION['mailcow_cc_username']))) {
     if (filter_var($login, FILTER_VALIDATE_EMAIL)) {

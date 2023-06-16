@@ -1,11 +1,18 @@
 <?php
-// SSO Domain Admin
 if (!empty($_GET['sso_token'])) {
+  // SSO Domain Admin
   $username = domain_admin_sso('check', $_GET['sso_token']);
-
   if ($username !== false) {
     $_SESSION['mailcow_cc_username'] = $username;
     $_SESSION['mailcow_cc_role'] = 'domainadmin';
+    header('Location: /mailbox');
+  }
+
+  // SSO Mailbox User
+  $username = mailbox_sso('check', $_GET['sso_token']);
+  if ($username !== false) {
+    $_SESSION['mailcow_cc_username'] = $username;
+    $_SESSION['mailcow_cc_role'] = 'user';
     header('Location: /mailbox');
   }
 }

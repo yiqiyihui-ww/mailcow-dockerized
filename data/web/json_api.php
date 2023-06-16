@@ -298,6 +298,14 @@ if (isset($_GET['query'])) {
               }
               process_add_return($data);
             break;
+            case "mailbox":
+              $data = mailbox_sso('issue', $attr);
+              if($data) {
+                echo json_encode($data);
+                exit(0);
+              }
+              process_add_return($data);
+            break;
           }
         break;
         case "admin":
