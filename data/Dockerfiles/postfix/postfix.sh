@@ -431,11 +431,22 @@ if [ ! -z "$DNSBL_CONFIG" ]; then
     echo -e "\e[32mDetected SPAMHAUS_DQS_KEY variable from mailcow.conf...\e[0m"
     echo -e "\e[33mUsing DQS Blocklists from Spamhaus!\e[0m"
     SPAMHAUS_DNSBL_CONFIG=$(cat <<EOF
-  ${SPAMHAUS_DQS_KEY}.zen.dq.spamhaus.net=127.0.0.[4..7]*6
-  ${SPAMHAUS_DQS_KEY}.zen.dq.spamhaus.net=127.0.0.[10;11]*8
-  ${SPAMHAUS_DQS_KEY}.zen.dq.spamhaus.net=127.0.0.3*4
-  ${SPAMHAUS_DQS_KEY}.zen.dq.spamhaus.net=127.0.0.2*3
+  ${SPAMHAUS_DQS_KEY}.zen.dq.spamhaus.net=127.0.0.[2..255]
 postscreen_dnsbl_reply_map = texthash:/opt/postfix/conf/dnsbl_reply.map
+
+smtpd_recipient_restrictions = check_recipient_mx_access proxy:mysql:/opt/postfix/conf/sql/mysql_mbr_access_maps.cf,
+  permit_sasl_authenticated,
+  permit_mynetworks,
+  check_recipient_access proxy:mysql:/opt/postfix/conf/sql/mysql_tls_enforce_in_policy.cf,
+  reject_invalid_helo_hostname,
+  reject_unauth_destination,
+  reject_rhsbl_sender ${SPAMHAUS_DQS_KEY}.dbl.dq.spamhaus.net=127.0.1.[2..99],
+  reject_rhsbl_helo ${SPAMHAUS_DQS_KEY}.dbl.dq.spamhaus.net=127.0.1.[2..99],
+  reject_rhsbl_reverse_client ${SPAMHAUS_DQS_KEY}.dbl.dq.spamhaus.net=127.0.1.[2..99],
+  reject_rhsbl_sender ${SPAMHAUS_DQS_KEY}.zrd.dq.spamhaus.net=127.0.2.[2..24],
+  reject_rhsbl_helo ${SPAMHAUS_DQS_KEY}.zrd.dq.spamhaus.net=127.0.2.[2..24],
+  reject_rhsbl_reverse_client ${SPAMHAUS_DQS_KEY}.zrd.dq.spamhaus.net=127.0.2.[2..24],
+  reject_rbl_client ${SPAMHAUS_DQS_KEY}.zen.dq.spamhaus.net=127.0.0.[2..255]
 EOF
 
   cat <<EOF > /opt/postfix/conf/dnsbl_reply.map
@@ -461,10 +472,20 @@ EOF
       echo -e "\e[32mThe AS of your IP is NOT listed as a banned AS from Spamhaus!\e[0m"
       echo -e "\e[33mUsing the open Spamhaus blocklists.\e[0m"
       SPAMHAUS_DNSBL_CONFIG=$(cat <<EOF
-  zen.spamhaus.org=127.0.0.[10;11]*8
-  zen.spamhaus.org=127.0.0.[4..7]*6
-  zen.spamhaus.org=127.0.0.3*4
-  zen.spamhaus.org=127.0.0.2*3
+  zen.spamhaus.org=127.0.0.[2..11]
+
+smtpd_recipient_restrictions = check_recipient_mx_access proxy:mysql:/opt/postfix/conf/sql/mysql_mbr_access_maps.cf,
+  permit_sasl_authenticated,
+  permit_mynetworks,
+  check_recipient_access proxy:mysql:/opt/postfix/conf/sql/mysql_tls_enforce_in_policy.cf,
+  reject_invalid_helo_hostname,
+  reject_unauth_destination,
+  reject_rbl_client zen.spamhaus.org=127.0.0.[2..11],
+  reject_rhsbl_sender dbl.spamhaus.org=127.0.1.[2..99],
+  reject_rhsbl_helo dbl.spamhaus.org=127.0.1.[2..99],
+  reject_rhsbl_reverse_client dbl.spamhaus.org=127.0.1.[2..99],
+  warn_if_reject reject_rbl_client zen.spamhaus.org=127.255.255.[1..255]
+
 EOF
       )
 
