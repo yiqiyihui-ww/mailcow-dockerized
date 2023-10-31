@@ -1,5 +1,5 @@
 # High spam networks, disabled by default
-# ASN SCORE DESC
+# ASN MULTIPLIER DESC
 # Remove comment to enable score
 #12874 5 #Fastweb SpA, Italy
 #12876 2 #ONLINE S.A.S, France
@@ -29,3 +29,4 @@
 #198068 2 #P.A.G.M. OU, Estonia
 #201942 5 #Soltia Consulting SL, Spain
 #213373 4 #IP Connect Inc
+#12616  1 #Citytelecom LLC
