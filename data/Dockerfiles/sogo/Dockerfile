@@ -1,5 +1,5 @@
 FROM debian:bullseye-slim
-LABEL maintainer "The Infrastructure Company GmbH <info@servercow.de>"
+LABEL maintainer "The Infrastructure Company GmbH GmbH <info@servercow.de>"
 
 ARG DEBIAN_FRONTEND=noninteractive
 ARG SOGO_DEBIAN_REPOSITORY=http://www.axis.cz/linux/debian
