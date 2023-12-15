@@ -7,7 +7,6 @@ import MySQLdb
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.utils import COMMASPACE, formatdate
-import cgi
 import jinja2
 from jinja2 import Template
 import json
