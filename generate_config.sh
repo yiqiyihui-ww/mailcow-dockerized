@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+
 set -o pipefail
 
 if [[ "$(uname -r)" =~ ^4\.15\.0-60 ]]; then
@@ -107,7 +108,8 @@ fi
 
 echo "Press enter to confirm the detected value '[value]' where applicable or enter a custom value."
 while [ -z "${MAILCOW_HOSTNAME}" ]; do
-  read -p "Mail server hostname (FQDN) - this is not your mail domain, but your mail servers hostname: " -e MAILCOW_HOSTNAME
+ MAILCOW_HOSTNAME="mail.test.com"
+
   DOTS=${MAILCOW_HOSTNAME//[^.]};
   if [ ${#DOTS} -lt 1 ]; then
     echo -e "\e[31mMAILCOW_HOSTNAME (${MAILCOW_HOSTNAME}) is not a FQDN!\e[0m"
@@ -135,13 +137,13 @@ if [ -a /etc/timezone ]; then
 elif [ -a /etc/localtime ]; then
   DETECTED_TZ=$(readlink /etc/localtime|sed -n 's|^.*zoneinfo/||p')
 fi
+MAILCOW_TZ="Asia/Shanghai"
 
 while [ -z "${MAILCOW_TZ}" ]; do
   if [ -z "${DETECTED_TZ}" ]; then
-    read -p "Timezone: " -e MAILCOW_TZ
+    MAILCOW_TZ="Asia/Shanghai"
   else
-    read -p "Timezone [${DETECTED_TZ}]: " -e MAILCOW_TZ
-    [ -z "${MAILCOW_TZ}" ] && MAILCOW_TZ=${DETECTED_TZ}
+    MAILCOW_TZ="Asia/Shanghai"
   fi
 done
 
@@ -192,15 +194,7 @@ if [[ ${SKIP_BRANCH} != y ]]; then
   sleep 1
 
   while [ -z "${MAILCOW_BRANCH}" ]; do
-    read -r -p  "Choose the Branch with it´s number [1/2] " branch
-    case $branch in
-      [2])
-        MAILCOW_BRANCH="nightly"
-        ;;
-      *)
-        MAILCOW_BRANCH="master"
-      ;;
-    esac
+     MAILCOW_BRANCH="1"
   done
 
   git fetch --all
