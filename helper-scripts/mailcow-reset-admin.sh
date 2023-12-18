@@ -15,7 +15,7 @@ if [[ -z $(docker ps -qf name=mysql-mailcow) ]]; then
 fi
 
 echo "OK"
-read -r -p "Are you sure you want to reset the mailcow administrator account? [y/N] " response
+#read -r -p "Are you sure you want to reset the mailcow administrator account? [y/N] " response
 response=${response,,}    # tolower
 if [[ "$response" =~ ^(yes|y)$ ]]; then
 	echo -e "\nWorking, please wait..."
