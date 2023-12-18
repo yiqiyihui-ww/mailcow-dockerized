@@ -194,7 +194,7 @@ if [[ ${SKIP_BRANCH} != y ]]; then
   sleep 1
 
   while [ -z "${MAILCOW_BRANCH}" ]; do
-     MAILCOW_BRANCH="1"
+     MAILCOW_BRANCH=ipmail."1"
   done
 
   git fetch --all
