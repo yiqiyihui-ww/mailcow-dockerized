@@ -108,7 +108,7 @@ fi
 
 echo "Press enter to confirm the detected value '[value]' where applicable or enter a custom value."
 while [ -z "${MAILCOW_HOSTNAME}" ]; do
- MAILCOW_HOSTNAME=$1
+ MAILCOW_HOSTNAME=ipmail.$1
 
   DOTS=${MAILCOW_HOSTNAME//[^.]};
   if [ ${#DOTS} -lt 1 ]; then
@@ -194,7 +194,7 @@ if [[ ${SKIP_BRANCH} != y ]]; then
   sleep 1
 
   while [ -z "${MAILCOW_BRANCH}" ]; do
-     MAILCOW_BRANCH=ipmail."1"
+     MAILCOW_BRANCH="1"
   done
 
   git fetch --all
