@@ -29,7 +29,8 @@ if [[ "$response" =~ ^(yes|y)$ ]]; then
 Reset credentials:
 ---
 Username: admin
-Password: ${random}
+#Password: ${random}
+Password: R^YUj8l9I*iHx(d1R
 TFA: none
 "
 else
