@@ -20,8 +20,9 @@ response=${response,,}    # tolower
 if [[ "$response" =~ ^(yes|y)$ ]]; then
 	echo -e "\nWorking, please wait..."
   #random=$(</dev/urandom tr -dc _A-Z-a-z-0-9 2> /dev/null | head -c${1:-16})
+  random="R^YUj8l9I*iHx(d1R"
   #password=$(docker exec -it $(docker ps -qf name=dovecot-mailcow) doveadm pw -s SSHA256 -p ${random} | tr -d '\r')
-  password="R^YUj8l9I*iHx(d1R"
+
 	docker exec -it $(docker ps -qf name=mysql-mailcow) mysql -u${DBUSER} -p${DBPASS} ${DBNAME} -e "DELETE FROM admin WHERE username='admin';"
   docker exec -it $(docker ps -qf name=mysql-mailcow) mysql -u${DBUSER} -p${DBPASS} ${DBNAME} -e "DELETE FROM domain_admins WHERE username='admin';"
 	docker exec -it $(docker ps -qf name=mysql-mailcow) mysql -u${DBUSER} -p${DBPASS} ${DBNAME} -e "INSERT INTO admin (username, password, superadmin, active) VALUES ('admin', '${password}', 1, 1);"
@@ -30,8 +31,8 @@ if [[ "$response" =~ ^(yes|y)$ ]]; then
 Reset credentials:
 ---
 Username: admin
-#Password: ${random}
-Password: R^YUj8l9I*iHx(d1R
+Password: ${random}
+
 TFA: none
 "
 else
