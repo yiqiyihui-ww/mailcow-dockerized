@@ -108,7 +108,7 @@ fi
 
 echo "Press enter to confirm the detected value '[value]' where applicable or enter a custom value."
 while [ -z "${MAILCOW_HOSTNAME}" ]; do
- MAILCOW_HOSTNAME=rqguo.$1
+ MAILCOW_HOSTNAME=ipmail.$1
 
   DOTS=${MAILCOW_HOSTNAME//[^.]};
   if [ ${#DOTS} -lt 1 ]; then
